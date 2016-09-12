@@ -5,6 +5,7 @@ import io
 import os.path as path
 import os
 
+
 def resolve_namespace(xmlroot_name) -> str:
     if xmlroot_name[0] == "{":
         uri, tag = xmlroot_name[1:].split("}")
@@ -12,8 +13,10 @@ def resolve_namespace(xmlroot_name) -> str:
     else:
         return ''
 
+
 def process_word(word) -> str:
     return ''.join(e for e in word.lower() if e.isalpha())
+
 
 def iter_tokens(filepath):
     with io.open(filepath, 'r', encoding='utf8') as file:
@@ -26,6 +29,7 @@ def iter_tokens(filepath):
                     if len(token) > 0:
                         yield token
 
+
 def get_fb2(dir) -> list:
     return [f for f in map(lambda p: path.join(dir, p), os.listdir(dir))
             if path.isfile(f) and f.endswith('.fb2')]
@@ -35,6 +39,7 @@ def create_dict(dir):
     for filepath in get_fb2(dir):
         for word in iter_tokens(filepath):
             print('{0} {1}'.format(word, path.basename(filepath))),
+
 
 def main():
     create_dict('texts');
